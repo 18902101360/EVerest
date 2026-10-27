@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt5 5.14 REQUIRED COMPONENTS Widgets WebSockets)
+find_package(Qt5 5.14 REQUIRED COMPONENTS Widgets WebSockets Test)
 
 set(C_OCPP ${CMAKE_CURRENT_SOURCE_DIR}/..)
 file(GLOB OCPP16_MSG ${C_OCPP}/ocpp16/messages/*.c)
@@ -18,6 +18,7 @@ add_executable(qt_ocpp_cp
     src/main.cpp
     src/MainWindow.cpp
     src/CpReqExamples.cpp
+    src/click_all.cpp
     ${C_OCPP}/port/ocpp_port.c
     ${C_OCPP}/layer1/ocpp_json.c
     ${C_OCPP}/layer1/ocpp_rpc.c
@@ -42,7 +43,7 @@ target_include_directories(qt_ocpp_cp PRIVATE
     ${C_OCPP}/ocpp21
     ${C_OCPP}/ocpp21/messages
 )
-target_link_libraries(qt_ocpp_cp PRIVATE Qt5::Widgets Qt5::WebSockets)
+target_link_libraries(qt_ocpp_cp PRIVATE Qt5::Widgets Qt5::WebSockets Qt5::Test)
 if(MSVC)
     target_compile_options(qt_ocpp_cp PRIVATE /W3)
 else()

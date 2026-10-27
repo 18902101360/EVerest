@@ -1,5 +1,5 @@
 # Qt Creator 5.14：用本文件打开工程。影子构建目录不要放在源码树外的 c_ocpp 里面。
-QT += core gui widgets websockets network
+QT += core gui widgets websockets network testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11 warn_on
@@ -31,6 +31,7 @@ SOURCES += \
     src/main.cpp \
     src/MainWindow.cpp \
     src/CpReqExamples.cpp \
+    src/click_all.cpp \
     $$C_OCPP/port/ocpp_port.c \
     $$C_OCPP/layer1/ocpp_json.c \
     $$C_OCPP/layer1/ocpp_rpc.c \

@@ -2,6 +2,7 @@
  * Qt 5.14 充电桩入口。协议在 c_ocpp 里，这里只把命令行交给窗口。
  * --auto 用来在没有人点按钮时确认 Boot 已被 CSMS 接受。
  */
+#include "click_all.h"
 #include "MainWindow.h"
 
 #include <QApplication>
@@ -39,11 +40,14 @@ int main(int argc, char *argv[]) {
                                 QStringLiteral("name"), QStringLiteral("QT-CP"));
     QCommandLineOption autoOpt(QStringLiteral("auto"),
                                QStringLiteral("Connect all three tabs, exit 0 after every BootNotification is Accepted"));
+    QCommandLineOption clickOpt(QStringLiteral("click-all"),
+                                QStringLiteral("Click every charge-point request button on the three tabs"));
     parser.addOption(urlOpt);
     parser.addOption(idOpt);
     parser.addOption(vendorOpt);
     parser.addOption(modelOpt);
     parser.addOption(autoOpt);
+    parser.addOption(clickOpt);
     parser.process(app);
 
     MainWindow window;
@@ -54,6 +58,12 @@ int main(int argc, char *argv[]) {
     const bool autoExit = parser.isSet(autoOpt);
     window.setAutoExit(autoExit);
     window.show();
+
+    if (parser.isSet(clickOpt)) {
+        /* 等窗口进事件循环再点，否则套接字还没有线程。点完由 clickAllRequests 决定退出码。 */
+        QTimer::singleShot(0, &window, [&window]() { QCoreApplication::exit(clickAllRequests(&window)); });
+        return app.exec();
+    }
 
     if (autoExit) {
         /* 等窗口进入事件循环再连，否则套接字还没有线程。 */

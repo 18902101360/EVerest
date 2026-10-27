@@ -243,6 +243,7 @@ QWidget *MainWindow::makePage(int link, const QString &defaultId, const QString 
     link_[link].vendor = new QLineEdit(QStringLiteral("zephyr"), page);
     link_[link].model = new QLineEdit(QStringLiteral("QT-CP"), page);
     link_[link].status = new QLabel(QStringLiteral("未连接"), page);
+    link_[link].status->setObjectName(QStringLiteral("linkStatus"));
     form->addRow(QStringLiteral("CSMS 地址"), link_[link].url);
     form->addRow(QStringLiteral("桩号"), link_[link].id);
     /*
@@ -255,6 +256,7 @@ QWidget *MainWindow::makePage(int link, const QString &defaultId, const QString 
 
     auto *buttons = new QHBoxLayout();
     auto *connectBtn = new QPushButton(QStringLiteral("连接"), page);
+    connectBtn->setObjectName(QStringLiteral("connectButton"));
     auto *disconnectBtn = new QPushButton(QStringLiteral("断开"), page);
     buttons->addWidget(connectBtn);
     buttons->addWidget(disconnectBtn);
@@ -289,6 +291,7 @@ QWidget *MainWindow::makePage(int link, const QString &defaultId, const QString 
     scroll->setWidget(rowHost);
 
     link_[link].log = new QPlainTextEdit(page);
+    link_[link].log->setObjectName(QStringLiteral("linkLog"));
     link_[link].log->setReadOnly(true);
     link_[link].log->setMinimumHeight(160);
     link_[link].log->setPlaceholderText(QStringLiteral("这一页的收发日志"));
@@ -324,6 +327,7 @@ void MainWindow::addReqRows(int link, QVBoxLayout *rows, const CpReqExample *spe
     for (int i = 0; i < count; ++i) {
         specs[i].fill(buf, sizeof(buf));
         auto *btn = new QPushButton(QString::fromUtf8(specs[i].action), rows->parentWidget());
+        btn->setObjectName(QStringLiteral("reqButton"));
         btn->setFixedWidth(260);
         auto *edit = new QLineEdit(QString::fromUtf8(buf), rows->parentWidget());
         edit->setPlaceholderText(QStringLiteral("Request JSON"));

@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 
     QCommandLineParser parser;
     parser.setApplicationDescription(
-        QStringLiteral("Qt 5.14 charge point: c_ocpp OCPP 1.6 and 2.0.1 over QWebSocket"));
+        QStringLiteral("Qt 5.14 charge point: one tab each for OCPP 1.6, 2.0.1 and 2.1"));
     parser.addHelpOption();
     QCommandLineOption urlOpt(QStringList() << QStringLiteral("u") << QStringLiteral("url"),
                               QStringLiteral("CSMS base URL, without charge-point id"),
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     QCommandLineOption modelOpt(QStringLiteral("model"), QStringLiteral("chargePointModel / model"),
                                 QStringLiteral("name"), QStringLiteral("QT-CP"));
     QCommandLineOption autoOpt(QStringLiteral("auto"),
-                               QStringLiteral("Connect both versions, exit 0 after BootNotification Accepted"));
+                               QStringLiteral("Connect all three tabs, exit 0 after every BootNotification is Accepted"));
     parser.addOption(urlOpt);
     parser.addOption(idOpt);
     parser.addOption(vendorOpt);
@@ -47,7 +47,10 @@ int main(int argc, char *argv[]) {
     parser.process(app);
 
     MainWindow window;
-    window.applySettings(parser.value(urlOpt), parser.value(idOpt), parser.value(vendorOpt), parser.value(modelOpt));
+    window.applySettings(parser.isSet(urlOpt) ? parser.value(urlOpt) : QString(),
+                         parser.isSet(idOpt) ? parser.value(idOpt) : QString(),
+                         parser.isSet(vendorOpt) ? parser.value(vendorOpt) : QString(),
+                         parser.isSet(modelOpt) ? parser.value(modelOpt) : QString());
     const bool autoExit = parser.isSet(autoOpt);
     window.setAutoExit(autoExit);
     window.show();

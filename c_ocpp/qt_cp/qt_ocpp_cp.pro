@@ -20,7 +20,9 @@ INCLUDEPATH += \
     $$C_OCPP/ocpp16 \
     $$C_OCPP/ocpp16/messages \
     $$C_OCPP/ocpp201 \
-    $$C_OCPP/ocpp201/messages
+    $$C_OCPP/ocpp201/messages \
+    $$C_OCPP/ocpp21 \
+    $$C_OCPP/ocpp21/messages
 
 QMAKE_CFLAGS += -std=c11 -Wall -Wextra
 QMAKE_CXXFLAGS += -Wall -Wextra
@@ -28,14 +30,17 @@ QMAKE_CXXFLAGS += -Wall -Wextra
 SOURCES += \
     src/main.cpp \
     src/MainWindow.cpp \
+    src/CpReqExamples.cpp \
     $$C_OCPP/port/ocpp_port.c \
     $$C_OCPP/layer1/ocpp_json.c \
     $$C_OCPP/layer1/ocpp_rpc.c \
     $$C_OCPP/third_party/cjson/cJSON.c \
     $$C_OCPP/ocpp16/ocpp16_session.c \
-    $$C_OCPP/ocpp201/ocpp201_session.c
+    $$C_OCPP/ocpp201/ocpp201_session.c \
+    $$C_OCPP/ocpp21/ocpp21_session.c
 
 SOURCES += $$files($$C_OCPP/ocpp16/messages/*.c)
 SOURCES += $$files($$C_OCPP/ocpp201/messages/*.c)
+SOURCES += $$files($$C_OCPP/ocpp21/messages/*.c)
 
-HEADERS += src/MainWindow.h
+HEADERS += src/MainWindow.h src/CpReqExamples.h

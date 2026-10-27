@@ -551,7 +551,7 @@ LIB16_SRC := $(C_OCPP)/ocpp16/ocpp16_session.c \
 
 ## Qt 5.14 充电桩
 
-`c_ocpp/qt_cp/` 是主机上的充电桩窗口：Qt 5.14 `QWebSocket` 当传输，协议仍用本目录的 1.6 / 2.0.1 session。两条连接同时存在，子协议分别是 `ocpp1.6` 和 `ocpp2.0.1`。打开 `qt_ocpp_cp.pro`，或按 `c_ocpp/qt_cp/README.md` 用 CMake 编。连上后自动发 BootNotification。
+`c_ocpp/qt_cp/` 是主机上的充电桩窗口：三个分页分别是 OCPP 1.6、2.0.1 和 2.1。每页自己连接，桩侧 Request 做成按钮，旁边的文本框里是可修改的示例 JSON，页底是这一页的日志。打开 `qt_ocpp_cp.pro`，或按 `c_ocpp/qt_cp/README.md` 用 CMake 编。连上后自动发 BootNotification。
 
 ## 常见问题
 
